@@ -1,0 +1,35 @@
+
+CREATE TABLE IF NOT EXISTS TICKERS (
+    id SERIAL PRIMARY KEY,
+    symbol VARCHAR(10) NOT NULL UNIQUE,
+    company_name VARCHAR(100) NOT NULL,
+    exchange VARCHAR(50),
+    sector VARCHAR(50),
+    industry VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE  IF NOT exists TIMEBUCKET(
+    id SERIAL primary KEY,
+    tb VARCHAR(10) NOT NULL
+)
+
+
+CREATE TABLE IF NOT EXISTS HISTORICAL_PRICES (
+    id SERIAL PRIMARY KEY,
+    ticker_id int not null references TICKERS(id) ON DELETE CASCADE,
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    open FLOAT NOT NULL,
+    close FLOAT NOT NULL,
+    high FLOAT NOT NULL,
+    low FLOAT NOT NULL,
+    volume FLOAT NOT NULL,  
+    rsi FLOAT NOT NULL,
+    macd FLOAT NOT NULL,
+    ema_20 FLOAT NOT NULL,
+    ema_50 FLOAT NOT NULL,
+    ema_200 FLOAT NOT NULL,
+    timebucket int NOT NULL references TIMEBUCKET(id) ON DELETE CASCADE,
+
+
+);
