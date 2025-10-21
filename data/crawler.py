@@ -10,6 +10,18 @@ class DataCrawler:
         self.start = start 
         self.end = end 
 
+    def crawl_ticker_information(self,ticker):
+        ticker_obj = yfinance.Ticker(ticker)
+        info = ticker_obj.info
+        return info
+
+    def crawl_ticker_news(self,ticker):
+        if not self.news:
+            return None 
+        ticker_obj = yfinance.Ticker(ticker)
+        news = ticker_obj.news
+        return news
+
     def crawl_ticker_data(self,ticker):
 
         data = yfinance.download(ticker,
@@ -18,7 +30,7 @@ class DataCrawler:
                           interval=self.time_bucket
                           )
         
-        print(data)
+        return data
 
 
 
