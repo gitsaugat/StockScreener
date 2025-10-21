@@ -15,7 +15,9 @@ class Database:
         self.cursor.execute(query, params)
         self.connection.commit()
         return self.cursor.fetchall()
-
+ 
     def close(self):
         self.cursor.close()
         self.connection.close()
+
+DB = Database('finance','siwakos01','siwakos01')
