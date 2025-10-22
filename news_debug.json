@@ -1,0 +1,697 @@
+[
+    {
+        "id": "bcb646c2-a5c3-3edf-8703-75a6b33cda9a",
+        "content": {
+            "id": "bcb646c2-a5c3-3edf-8703-75a6b33cda9a",
+            "contentType": "VIDEO",
+            "title": "Why the AI boom might not be like the dot-com bubble",
+            "description": "<p>Wealth Enhancement portfolio consulting director, Ayako Yoshioka, joins Market Domination Overtime host <a data-i13n=\"cpos:1;pos:1\" href=\"https://finance.yahoo.com/author/josh-lipton/\">Josh Lipton</a> to discuss Big Tech earnings and whether there really is an artificial intelligence (AI) market bubble.</p>\n<p>To watch more expert insights and analysis on the latest market action, check out more <a data-i13n=\"cpos:2;pos:1\" href=\"https://finance.yahoo.com/videos/series/market-domination-overtime/\">Market Domination Overtime</a>.</p>",
+            "summary": "Wealth Enhancement portfolio consulting director, Ayako Yoshioka, joins Market Domination Overtime host Josh Lipton to discuss Big Tech earnings and whether there really is an artificial intelligence (AI) market bubble. To watch more expert insights and analysis on the latest market action, check out more Market Domination Overtime.",
+            "pubDate": "2025-10-21T22:15:00Z",
+            "displayTime": "",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": {
+                "originalUrl": "https://s.yimg.com/os/creatr-uploaded-images/2025-10/2480a8c0-aec4-11f0-bbb0-a4f4f57f1c3a",
+                "originalWidth": 5740,
+                "originalHeight": 3230,
+                "caption": "",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/XxGJs4IYG2bmz8XXFIVJ1A--~B/aD0zMjMwO3c9NTc0MDthcHBpZD15dGFjaHlvbg--/https://s.yimg.com/os/creatr-uploaded-images/2025-10/2480a8c0-aec4-11f0-bbb0-a4f4f57f1c3a",
+                        "width": 5740,
+                        "height": 3230,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/Syb0HL5PqlAZC6K29Yvi7w--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://s.yimg.com/os/creatr-uploaded-images/2025-10/2480a8c0-aec4-11f0-bbb0-a4f4f57f1c3a",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "Yahoo Finance Video",
+                "url": "https://finance.yahoo.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://finance.yahoo.com/video/why-ai-boom-might-not-221500421.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": {
+                "url": "https://finance.yahoo.com/video/why-ai-boom-might-not-221500421.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": true
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": {
+                "storylineItems": [
+                    {
+                        "content": {
+                            "id": "ba307603-916d-361d-8681-85bc8d2ac070",
+                            "contentType": "VIDEO",
+                            "isHosted": true,
+                            "title": "What OpenAI's ChatGPT Atlas browser means for Google, Apple",
+                            "thumbnail": {
+                                "originalUrl": "https://s.yimg.com/os/creatr-uploaded-images/2025-10/8b34e380-aeb8-11f0-a1e3-ab561c2f4bd6",
+                                "originalWidth": 2585,
+                                "originalHeight": 1455,
+                                "caption": "",
+                                "resolutions": null
+                            },
+                            "provider": {
+                                "displayName": "Yahoo Finance Video",
+                                "sourceId": "video.yahoofinance.com"
+                            },
+                            "previewUrl": null,
+                            "providerContentUrl": "",
+                            "canonicalUrl": {
+                                "url": "https://finance.yahoo.com/video/openais-chatgpt-atlas-browser-means-200413345.html"
+                            },
+                            "clickThroughUrl": {
+                                "url": "https://finance.yahoo.com/video/openais-chatgpt-atlas-browser-means-200413345.html"
+                            }
+                        }
+                    },
+                    {
+                        "content": {
+                            "id": "6dfafbfe-09c8-33db-be62-1602f77b5b61",
+                            "contentType": "VIDEO",
+                            "isHosted": true,
+                            "title": "Apple nears $4T market cap. Is it catching up in the AI race?",
+                            "thumbnail": {
+                                "originalUrl": "https://s.yimg.com/os/creatr-uploaded-images/2025-10/54993f40-ae88-11f0-8f76-90ab19e383b4",
+                                "originalWidth": 5000,
+                                "originalHeight": 2815,
+                                "caption": "",
+                                "resolutions": null
+                            },
+                            "provider": {
+                                "displayName": "Yahoo Finance Video",
+                                "sourceId": "video.yahoofinance.com"
+                            },
+                            "previewUrl": null,
+                            "providerContentUrl": "",
+                            "canonicalUrl": {
+                                "url": "https://finance.yahoo.com/video/apple-nears-4t-market-cap-163000097.html"
+                            },
+                            "clickThroughUrl": {
+                                "url": "https://finance.yahoo.com/video/apple-nears-4t-market-cap-163000097.html"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "b3314707-c4ed-48eb-bd5b-e4d4695f858a",
+        "content": {
+            "id": "b3314707-c4ed-48eb-bd5b-e4d4695f858a",
+            "contentType": "STORY",
+            "title": "Apple stock price closing in on $4 trillion market cap on report of strong iPhone 17 sales",
+            "description": "",
+            "summary": "Apple's market capitalization is closing in on $4 trillion.",
+            "pubDate": "2025-10-20T15:31:40Z",
+            "displayTime": "2025-10-21T13:59:04Z",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": {
+                "originalUrl": "https://s.yimg.com/os/creatr-uploaded-images/2025-10/ea0b7810-adc8-11f0-b6ef-7544319ad3bc",
+                "originalWidth": 4075,
+                "originalHeight": 2717,
+                "caption": "",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/veO31OGAyjCfNzsRnY4R_g--~B/aD0yNzE3O3c9NDA3NTthcHBpZD15dGFjaHlvbg--/https://s.yimg.com/os/creatr-uploaded-images/2025-10/ea0b7810-adc8-11f0-b6ef-7544319ad3bc",
+                        "width": 4075,
+                        "height": 2717,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/SLgPMJ_.O75N1.zHwdHd1g--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://s.yimg.com/os/creatr-uploaded-images/2025-10/ea0b7810-adc8-11f0-b6ef-7544319ad3bc",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "Yahoo Finance",
+                "url": "http://finance.yahoo.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://finance.yahoo.com/news/apple-stock-price-closing-in-on-4-trillion-market-cap-on-report-of-strong-iphone-17-sales-153140384.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": {
+                "url": "https://finance.yahoo.com/news/apple-stock-price-closing-in-on-4-trillion-market-cap-on-report-of-strong-iphone-17-sales-153140384.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": true
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": {
+                "storylineItems": [
+                    {
+                        "content": {
+                            "id": "ae9011fe-b348-3095-acdd-5236f97d12a9",
+                            "contentType": "VIDEO",
+                            "isHosted": true,
+                            "title": "Apple gets 2 price target lifts, 3M raises outlook again",
+                            "thumbnail": {
+                                "originalUrl": "https://s.yimg.com/os/creatr-uploaded-images/2025-10/259b5ba0-ae84-11f0-9bbd-b3476f444b6a",
+                                "originalWidth": 4003,
+                                "originalHeight": 2254,
+                                "caption": "",
+                                "resolutions": null
+                            },
+                            "provider": {
+                                "displayName": "Yahoo Finance Video",
+                                "sourceId": "video.yahoofinance.com"
+                            },
+                            "previewUrl": null,
+                            "providerContentUrl": "",
+                            "canonicalUrl": {
+                                "url": "https://finance.yahoo.com/video/apple-gets-2-price-target-134713323.html"
+                            },
+                            "clickThroughUrl": {
+                                "url": "https://finance.yahoo.com/video/apple-gets-2-price-target-134713323.html"
+                            }
+                        }
+                    },
+                    {
+                        "content": {
+                            "id": "74b4094f-34a2-4647-8d6d-3dc46632e1a0",
+                            "contentType": "STORY",
+                            "isHosted": true,
+                            "title": "Dow, S&P 500, Nasdaq jump as Apple leads tech stocks higher ahead of busy earnings week",
+                            "thumbnail": {
+                                "originalUrl": "https://s.yimg.com/os/creatr-uploaded-images/2025-10/5b474fb0-9fc1-11f0-bfb4-6397842a3388",
+                                "originalWidth": 6048,
+                                "originalHeight": 4032,
+                                "caption": "",
+                                "resolutions": null
+                            },
+                            "provider": {
+                                "displayName": "Yahoo Finance",
+                                "sourceId": "yahoofinance.com"
+                            },
+                            "previewUrl": null,
+                            "providerContentUrl": "",
+                            "canonicalUrl": {
+                                "url": "https://finance.yahoo.com/news/live/dow-sp-500-nasdaq-jump-as-apple-leads-tech-stocks-higher-ahead-of-busy-earnings-week-200047280.html"
+                            },
+                            "clickThroughUrl": {
+                                "url": "https://finance.yahoo.com/news/live/dow-sp-500-nasdaq-jump-as-apple-leads-tech-stocks-higher-ahead-of-busy-earnings-week-200047280.html"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "2ac07c12-d84d-3f06-bea4-d327a70e9567",
+        "content": {
+            "id": "2ac07c12-d84d-3f06-bea4-d327a70e9567",
+            "contentType": "VIDEO",
+            "title": "Why Apple CEO Tim Cook will be with Apple for the long haul",
+            "description": "<p>Neuberger Berman senior research analyst, Dan Flax, joins Market Domination Overtime host <a data-i13n=\"cpos:1;pos:1\" href=\"https://finance.yahoo.com/author/josh-lipton/\">Josh Lipton</a> to discuss Apple's (<a data-i13n=\"cpos:2;pos:1\" href=\"https://finance.yahoo.com/quote/AAPL\">AAPL</a>) C-suite changes and explain why he believes Apple CEO Tim Cook will have a long-term role with Apple.</p>\n<p>To watch more expert insights and analysis on the latest market action, check out more <a data-i13n=\"cpos:3;pos:1\" href=\"https://finance.yahoo.com/videos/series/market-domination-overtime/\">Market Domination Overtime</a>.</p>",
+            "summary": "Neuberger Berman senior research analyst, Dan Flax, joins Market Domination Overtime host Josh Lipton to discuss Apple's (AAPL) C-suite changes and explain why he believes Apple CEO Tim Cook will have a long-term role with Apple. To watch more expert insights and analysis on the latest market action, check out more Market Domination Overtime.",
+            "pubDate": "2025-10-21T11:30:15Z",
+            "displayTime": "",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": {
+                "originalUrl": "https://s.yimg.com/os/creatr-uploaded-images/2025-10/d71e8950-adf9-11f0-9ffb-aa97f277e691",
+                "originalWidth": 4800,
+                "originalHeight": 2702,
+                "caption": "",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/bFPWBbeP8hpwpF3UJ4u7.Q--~B/aD0yNzAyO3c9NDgwMDthcHBpZD15dGFjaHlvbg--/https://s.yimg.com/os/creatr-uploaded-images/2025-10/d71e8950-adf9-11f0-9ffb-aa97f277e691",
+                        "width": 4800,
+                        "height": 2702,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/V6oqznhFCywroIaPvhBMVQ--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://s.yimg.com/os/creatr-uploaded-images/2025-10/d71e8950-adf9-11f0-9ffb-aa97f277e691",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "Yahoo Finance Video",
+                "url": "https://finance.yahoo.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://finance.yahoo.com/video/why-apple-ceo-tim-cook-113015888.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": {
+                "url": "https://finance.yahoo.com/video/why-apple-ceo-tim-cook-113015888.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": true
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    },
+    {
+        "id": "6c02c245-60cd-3ce1-b00a-75e687a24842",
+        "content": {
+            "id": "6c02c245-60cd-3ce1-b00a-75e687a24842",
+            "contentType": "STORY",
+            "title": "Apple (AAPL) Upgraded to Buy at Loop Capital as Multi-Year iPhone Growth Cycle Begins",
+            "description": "",
+            "summary": "Apple Inc. (NASDAQ:AAPL) is one of the AI Stocks Making Moves on Wall Street. On October 20, Loop Capital upgraded the stock to \u201cBuy\u201d from Hold and raised its price target to $315 from $226 per share. The firm cited stronger-than-expected demand for the iPhone 17 and a multi-year growth cycle extending through 2027 behind the [\u2026]",
+            "pubDate": "2025-10-21T21:22:49Z",
+            "displayTime": "2025-10-21T21:22:49Z",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": {
+                "originalUrl": "https://media.zenfs.com/en/insidermonkey.com/410ac07c4c90786d8592963501a2ed84",
+                "originalWidth": 1456,
+                "originalHeight": 816,
+                "caption": "",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/ZW3fq6JkBYqEx9N2Vum6qQ--~B/aD04MTY7dz0xNDU2O2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/insidermonkey.com/410ac07c4c90786d8592963501a2ed84",
+                        "width": 1456,
+                        "height": 816,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/Lc51vPFvh_63B_mHSkS49Q--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/insidermonkey.com/410ac07c4c90786d8592963501a2ed84",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "Insider Monkey",
+                "url": "http://www.insidermonkey.com"
+            },
+            "canonicalUrl": {
+                "url": "https://finance.yahoo.com/news/apple-aapl-upgraded-buy-loop-212249909.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": {
+                "url": "https://finance.yahoo.com/news/apple-aapl-upgraded-buy-loop-212249909.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": false
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    },
+    {
+        "id": "9a9dcf24-53c3-337b-b52f-631df6bfb4a1",
+        "content": {
+            "id": "9a9dcf24-53c3-337b-b52f-631df6bfb4a1",
+            "contentType": "STORY",
+            "title": "These Stocks Moved the Most Today: GM, Newmont, Warner Bros., 3M, RTX, Philip Morris, Beyond Meat, Netflix, and More",
+            "description": "",
+            "summary": "General Motors rises sharply after posting better-than-expected third-quarter earnings, while Warner Bros. begins a review of strategic alternatives, including a sale of the entertainment company.",
+            "pubDate": "2025-10-21T20:21:00Z",
+            "displayTime": "2025-10-21T20:21:00Z",
+            "isHosted": false,
+            "bypassModal": false,
+            "previewUrl": "https://finance.yahoo.com/m/9a9dcf24-53c3-337b-b52f-631df6bfb4a1/these-stocks-moved-the-most.html",
+            "thumbnail": {
+                "originalUrl": "https://media.zenfs.com/en/Barrons.com/ac27b5a56720289bef88b9b4b33a9262",
+                "originalWidth": 1280,
+                "originalHeight": 640,
+                "caption": "",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/LtVW9pfglhNdejshAcYHeQ--~B/aD02NDA7dz0xMjgwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/Barrons.com/ac27b5a56720289bef88b9b4b33a9262",
+                        "width": 1280,
+                        "height": 640,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/szHZuhLjYx4feR2kSIjg5g--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/Barrons.com/ac27b5a56720289bef88b9b4b33a9262",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "Barrons.com",
+                "url": "http://www.barrons.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://www.barrons.com/articles/stock-movers-2ae0152e?siteid=yhoof2&yptr=yahoo",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": null,
+            "metadata": {
+                "editorsPick": false
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    },
+    {
+        "id": "e8ea3bf7-6b62-3daf-a158-2547762bf0fe",
+        "content": {
+            "id": "e8ea3bf7-6b62-3daf-a158-2547762bf0fe",
+            "contentType": "STORY",
+            "title": "Top Stock Reports for Apple, Meta Platforms & JPMorgan",
+            "description": "",
+            "summary": "Apple's Services surge, Meta's AI push, and JPMorgan's strong capital markets results headline today's top stock research picks.",
+            "pubDate": "2025-10-21T20:17:00Z",
+            "displayTime": "2025-10-21T20:17:00Z",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": {
+                "originalUrl": "https://media.zenfs.com/en/zacks.com/4d0f5c269de903a3e502f871a8b4461f",
+                "originalWidth": 635,
+                "originalHeight": 400,
+                "caption": "",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/VVmgdI_JXVhezDlLQ4gwHA--~B/aD00MDA7dz02MzU7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/zacks.com/4d0f5c269de903a3e502f871a8b4461f",
+                        "width": 635,
+                        "height": 400,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/j38bQX2bRGmBrPMjaUnusA--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/zacks.com/4d0f5c269de903a3e502f871a8b4461f",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "Zacks",
+                "url": "http://www.zacks.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://finance.yahoo.com/news/top-stock-reports-apple-meta-201700028.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": {
+                "url": "https://finance.yahoo.com/news/top-stock-reports-apple-meta-201700028.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": false
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    },
+    {
+        "id": "30178610-f9a0-3b6a-ac42-25c22cc43f6f",
+        "content": {
+            "id": "30178610-f9a0-3b6a-ac42-25c22cc43f6f",
+            "contentType": "STORY",
+            "title": "Sector Update: Tech Stocks Mixed Late Afternoon",
+            "description": "",
+            "summary": "Tech stocks were mixed late Tuesday afternoon with the Technology Select Sector SPDR Fund (XLK) risi",
+            "pubDate": "2025-10-21T19:39:26Z",
+            "displayTime": "2025-10-21T19:39:26Z",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": null,
+            "provider": {
+                "displayName": "MT Newswires",
+                "url": "https://www.mtnewswires.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://finance.yahoo.com/news/sector-tech-stocks-mixed-afternoon-193926917.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": {
+                "url": "https://finance.yahoo.com/news/sector-tech-stocks-mixed-afternoon-193926917.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": false
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": true,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    },
+    {
+        "id": "eb81e29e-78f1-3a0c-90e3-6feedf456655",
+        "content": {
+            "id": "eb81e29e-78f1-3a0c-90e3-6feedf456655",
+            "contentType": "STORY",
+            "title": "EU watchdog attacks Britain over iPhone \u2018backdoor\u2019 demand",
+            "description": "",
+            "summary": "A European tech watchdog has attacked the Government for demanding \u201cbackdoor\u201d access to consumers\u2019 iPhone data, piling pressure on Home Secretary Shabana Mahmood in a fight with Apple.",
+            "pubDate": "2025-10-21T18:15:34Z",
+            "displayTime": "2025-10-21T18:15:34Z",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": {
+                "originalUrl": "https://media.zenfs.com/en/the_telegraph_818/cc3a8705f9c49dca99e3424148a29a34",
+                "originalWidth": 2500,
+                "originalHeight": 1571,
+                "caption": "Tim Cook at Apple Store iPhone 17 launch",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/yaMi5J0piQyqqrXM3._f3w--~B/aD0xNTcxO3c9MjUwMDthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/the_telegraph_818/cc3a8705f9c49dca99e3424148a29a34",
+                        "width": 2500,
+                        "height": 1571,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/jf0kMkyYcJjr9rJWyW058g--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/the_telegraph_818/cc3a8705f9c49dca99e3424148a29a34",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "The Telegraph",
+                "url": "http://www.telegraph.co.uk/"
+            },
+            "canonicalUrl": {
+                "url": "https://uk.finance.yahoo.com/news/eu-watchdog-attacks-britain-over-181534290.html",
+                "site": "finance",
+                "region": "GB",
+                "lang": "en-GB"
+            },
+            "clickThroughUrl": {
+                "url": "https://finance.yahoo.com/news/eu-watchdog-attacks-britain-over-181534290.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": false
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    },
+    {
+        "id": "09293c0d-c640-35f7-b199-1d9b8eceae44",
+        "content": {
+            "id": "09293c0d-c640-35f7-b199-1d9b8eceae44",
+            "contentType": "STORY",
+            "title": "Alphabet Stock Falls as OpenAI Introduces Atlas AI Browser",
+            "description": "",
+            "summary": "OpenAI hopes it will change how people use the World Wide Web, and challenged Google Chrome\u2019s dominance.",
+            "pubDate": "2025-10-21T18:04:00Z",
+            "displayTime": "2025-10-21T18:04:00Z",
+            "isHosted": false,
+            "bypassModal": false,
+            "previewUrl": "https://finance.yahoo.com/m/09293c0d-c640-35f7-b199-1d9b8eceae44/alphabet-stock-falls-as.html",
+            "thumbnail": {
+                "originalUrl": "https://media.zenfs.com/en/Barrons.com/2e1f0b51b946c77136c6a3cec235f8a9",
+                "originalWidth": 1280,
+                "originalHeight": 640,
+                "caption": "",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/FsHOKi1zZMRKSdcLMMvNhQ--~B/aD02NDA7dz0xMjgwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/en/Barrons.com/2e1f0b51b946c77136c6a3cec235f8a9",
+                        "width": 1280,
+                        "height": 640,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/kX6otBccpmGCXhm30NIOOw--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/Barrons.com/2e1f0b51b946c77136c6a3cec235f8a9",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "Barrons.com",
+                "url": "http://www.barrons.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://www.barrons.com/articles/openai-web-browser-google-71cf8451?siteid=yhoof2&yptr=yahoo",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": null,
+            "metadata": {
+                "editorsPick": false
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    },
+    {
+        "id": "bc0a1e9f-380a-3699-b290-6eafd79131f5",
+        "content": {
+            "id": "bc0a1e9f-380a-3699-b290-6eafd79131f5",
+            "contentType": "STORY",
+            "title": "As the browser wars heat up, here are the hottest alternatives to Chrome and Safari in 2025",
+            "description": "",
+            "summary": "We\u2019ve compiled an overview of some of the top alternative browsers available today aiming to challenge Chrome and Safari.",
+            "pubDate": "2025-10-21T17:54:28Z",
+            "displayTime": "2025-10-21T17:54:28Z",
+            "isHosted": true,
+            "bypassModal": false,
+            "previewUrl": null,
+            "thumbnail": {
+                "originalUrl": "https://media.zenfs.com/en/techcrunch_finance_785/5d2f2374aba1737b9db266ef493a4669",
+                "originalWidth": 6000,
+                "originalHeight": 3500,
+                "caption": "Web search bar on laptop screen 3d render - illustration of website form for research of information on computer",
+                "resolutions": [
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/.1FG_gUj7PrgjUuoP5iPWg--~B/aD0zNTAwO3c9NjAwMDthcHBpZD15dGFjaHlvbg--/https://media.zenfs.com/en/techcrunch_finance_785/5d2f2374aba1737b9db266ef493a4669",
+                        "width": 6000,
+                        "height": 3500,
+                        "tag": "original"
+                    },
+                    {
+                        "url": "https://s.yimg.com/uu/api/res/1.2/4gV857lblHdlPiAYuPw1Mg--~B/Zmk9c3RyaW07aD0xMjg7dz0xNzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/en/techcrunch_finance_785/5d2f2374aba1737b9db266ef493a4669",
+                        "width": 170,
+                        "height": 128,
+                        "tag": "170x128"
+                    }
+                ]
+            },
+            "provider": {
+                "displayName": "TechCrunch",
+                "url": "https://techcrunch.com/"
+            },
+            "canonicalUrl": {
+                "url": "https://tech.yahoo.com/computing/articles/browser-wars-heat-hottest-alternatives-183852323.html",
+                "site": "tech",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "clickThroughUrl": {
+                "url": "https://tech.yahoo.com/computing/articles/browser-wars-heat-hottest-alternatives-183852323.html",
+                "site": "finance",
+                "region": "US",
+                "lang": "en-US"
+            },
+            "metadata": {
+                "editorsPick": false
+            },
+            "finance": {
+                "premiumFinance": {
+                    "isPremiumNews": false,
+                    "isPremiumFreeNews": false
+                }
+            },
+            "storyline": null
+        }
+    }
+]

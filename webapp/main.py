@@ -253,7 +253,7 @@ def get_ticker_news(symbol):
 def get_news_sentiment(symbol):
     """Get news sentiment analysis"""
     try:
-        analyzer = StockAnalyzer(symbol, os.environ.get('GEMINI_API_KEY'))
+        analyzer = StockAnalyzer(symbol)
         sentiment = analyzer.analyze_news_sentiment()
         
         return jsonify({

@@ -7,22 +7,22 @@ import yfinance as yf
 import google.genai as genai
 from datetime import datetime, timedelta
 import json
-
+import os 
 
 class StockAnalyzer:
     """Main class for stock analysis"""
     
-    def __init__(self, symbol, gemini_api_key=None):
+    def __init__(self, symbol,gemini_api_key=os.environ.get('GEMINI_API_KEY')):
         self.symbol = symbol.upper()
         self.ticker = yf.Ticker(self.symbol)
         self.info = self.ticker.info
-        
         # Initialize Gemini API if key provided
         if gemini_api_key:
-            genai.client(api_key=gemini_api_key)
-            self.gemini_model = genai.GenerativeModel('gemini-pro')
+            self.gemini_model =  genai.Client(api_key=gemini_api_key)
         else:
             self.gemini_model = None
+
+        print(self.gemini_model)
     
     def get_basic_info(self):
         """Get basic stock information"""
@@ -255,24 +255,24 @@ class StockAnalyzer:
         """Fetch recent news for the stock"""
         try:
             news = self.ticker.news
-            
+           
             if not news:
                 return []
             
             processed_news = []
             for item in news[:limit]:
+                # print( item["content"].get('title', 'No title'))
                 processed_news.append({
-                    'title': item.get('title', 'No title'),
-                    'publisher': item.get('publisher', 'Unknown'),
-                    'link': item.get('link', '#'),
+                    'title': item["content"].get('title', 'No title'),
+                    'publisher': item["content"].get('publisher', 'Unknown'),
+                    'link': item["content"].get('link', '#'),
                     'publish_time': datetime.fromtimestamp(
-                        item.get('providerPublishTime', 0)
-                    ).strftime('%Y-%m-%d %H:%M:%S') if item.get('providerPublishTime') else 'N/A',
-                    'thumbnail': item.get('thumbnail', {}).get('resolutions', [{}])[0].get('url', '')
+                        item["content"].get('providerPublishTime', 0)
+                    ).strftime('%Y-%m-%d %H:%M:%S') if item["content"].get('providerPublishTime') else 'N/A',
                 })
-            
             return processed_news
         except Exception as e:
+            print(e)
             return []
     
     def analyze_news_sentiment(self, news_limit=10):
@@ -285,7 +285,6 @@ class StockAnalyzer:
         
         try:
             news = self.get_news(limit=news_limit)
-            
             if not news:
                 return {
                     'sentiment': 'neutral',
@@ -314,17 +313,25 @@ class StockAnalyzer:
             
             Only respond with valid JSON, no additional text.
             """
-            
+            import re
             # Get response from Gemini
-            response = self.gemini_model.generate_content(prompt)
-            
+            response = self.gemini_model.models.generate_content(model="gemini-2.5-flash",
+            contents=prompt)
             # Parse JSON response
             try:
-                result = json.loads(response.text)
+                raw_text = response.to_json_dict()["candidates"][0]["content"]["parts"][0]["text"]
+
+                cleaned_text = re.sub(r"^```json\s*|\s*```$", "", raw_text.strip())
+
+                # Step 3: Parse to Python dict
+                parsed_dict = json.loads(cleaned_text)
+                result = parsed_dict
+
+
                 result['news_count'] = len(news)
                 result['news_items'] = news
                 return result
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as err:
                 # If response is not valid JSON, extract what we can
                 return {
                     'sentiment': 'neutral',
@@ -332,6 +339,7 @@ class StockAnalyzer:
                     'summary': response.text[:200],
                     'news_count': len(news),
                     'news_items': news,
+                    "err":str(err),
                     'raw_analysis': response.text
                 }
         
@@ -356,7 +364,7 @@ class StockAnalyzer:
 class PortfolioAnalyzer:
     """Analyze multiple stocks for portfolio comparison"""
     
-    def __init__(self, symbols, gemini_api_key=None):
+    def __init__(self, symbols, gemini_api_key=os.environ.get('GEMINI_API_KEY')):
         self.symbols = [s.upper() for s in symbols]
         self.gemini_api_key = gemini_api_key
         self.analyzers = {
