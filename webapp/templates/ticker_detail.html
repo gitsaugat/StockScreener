@@ -428,8 +428,10 @@
         }
 
         function getRecommendationClass(rec) {
+            if(rec){
             const recLower = rec.toLowerCase().replace(' ', '-');
             return recLower;
+            }
         }
 
         async function loadAnalysis() {

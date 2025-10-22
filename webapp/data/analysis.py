@@ -12,17 +12,18 @@ import os
 class StockAnalyzer:
     """Main class for stock analysis"""
     
-    def __init__(self, symbol,gemini_api_key=os.environ.get('GEMINI_API_KEY')):
+    def __init__(self, symbol,gemini_api_key=None):
         self.symbol = symbol.upper()
         self.ticker = yf.Ticker(self.symbol)
         self.info = self.ticker.info
         # Initialize Gemini API if key provided
         if gemini_api_key:
             self.gemini_model =  genai.Client(api_key=gemini_api_key)
+            # self.gemini_model=None
         else:
             self.gemini_model = None
 
-        print(self.gemini_model)
+        print(self.gemini_model,"here")
     
     def get_basic_info(self):
         """Get basic stock information"""
@@ -272,12 +273,14 @@ class StockAnalyzer:
                 })
             return processed_news
         except Exception as e:
-            print(e)
+            print(e,"here am i")
             return []
     
     def analyze_news_sentiment(self, news_limit=10):
+
         """Analyze news sentiment using Gemini API"""
         if not self.gemini_model:
+            
             return {
                 'error': 'Gemini API key not configured',
                 'sentiment': 'unavailable'
@@ -440,10 +443,8 @@ def get_recommendation_score(analyzer_result):
         valuation_score = ratios.get('valuation', {}).get('valuation_score', 5)
         profitability_score = ratios.get('profitability', {}).get('profitability_score', 5)
         health_score = ratios.get('financial_health', {}).get('health_score', 5)
-        news_score = analyzer_result.get('news_sentiment', {}).get('confidence', None)   # Scale 0-10 
-        if news_score is not None:
-            overall_score_with_news = (valuation_score + profitability_score + health_score + (news_score/10)) / 4
-        
+        news_score = analyzer_result.get('news_sentiment', {}).get('confidence', 50)/10   # Scale 0-10 
+
         overall_score = (valuation_score + profitability_score + health_score) / 3        
 
 
@@ -458,25 +459,25 @@ def get_recommendation_score(analyzer_result):
         else:
             recommendation = 'Strong Sell'
 
-        if overall_score_with_news >= 7:
+        if news_score >= 7:
             news_recommendation = 'Strong Buy'
-        elif overall_score_with_news >= 6:
+        elif news_score >= 6:
             news_recommendation = 'Buy'
-        elif overall_score_with_news >= 5:
+        elif news_score >= 5:
             news_recommendation = 'Hold'
-        elif overall_score_with_news >= 4:
+        elif news_score >= 4:
             news_recommendation = 'Sell'
         else:
             news_recommendation = 'Strong Sell'
         
         return {
             'score': round(overall_score, 1),
-            'score_with_news_sentiment': round(overall_score_with_news, 1),
+            'score_with_news_sentiment': round(news_score, 1),
             'recommendation': recommendation,
             'news_recommendation': news_recommendation
         }
     except Exception as e:
-        print(e)
+        print(e,"here")
         return {
             'score': 5.0,
             'recommendation': 'Hold'

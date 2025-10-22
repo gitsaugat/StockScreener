@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request, jsonify
+from flask import Flask, render_template , request, jsonify,session
 from data.tickers import DEFAULT_TICKERS
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
@@ -24,6 +24,25 @@ def home():
 def ticker_detail(symbol):
     """Ticker detail page with comprehensive analysis"""
     return render_template('ticker_detail.html', symbol=symbol.upper())
+
+@app.route('/api/set_ai_mode', methods=['POST'])
+def set_ai_mode():
+    data = request.json
+    ai_mode = data.get('ai_mode', 'off')  # 'on' or 'off'
+    
+    if ai_mode not in ['on', 'off']:
+        return jsonify({'error': 'AI mode must be "on" or "off"'}), 400
+    
+    session['ai_mode'] = ai_mode
+    return jsonify({
+        'message': 'AI mode updated',
+        'ai_mode': ai_mode
+    })
+
+@app.route('/api/get-ai-mode', methods=['GET'])
+def get_ai_mode():
+    ai_mode = session.get('ai_mode', 'off')  # Default to 'off'
+    return jsonify({'ai_mode': ai_mode})
 
 
 @app.route('/api/initialize_tickers', methods=['POST'])
@@ -211,7 +230,7 @@ def get_historical_data(symbol):
 def analyze_ticker(symbol):
     """Get comprehensive analysis for a ticker"""
     try:
-        analyzer = StockAnalyzer(symbol, "AIzaSyCpNpGsMDoMXaU91_55oUpXu5zsTA2bHDU")
+        analyzer = StockAnalyzer(symbol, gemini_api_key=os.getenv('GEMINI_API_KEY') if session.get('ai_mode') == 'on' else None)
         analysis = analyzer.get_comprehensive_analysis()
         
         # Add recommendation score
@@ -234,7 +253,7 @@ def analyze_ticker(symbol):
 def get_ticker_news(symbol):
     """Get news for a ticker"""
     try:
-        analyzer = StockAnalyzer(symbol)
+        analyzer = StockAnalyzer(symbol, gemini_api_key=os.getenv('GEMINI_API_KEY') if session.get('ai_mode') == 'on' else None)
         news = analyzer.get_news(limit=20)
         
         return jsonify({
@@ -253,7 +272,8 @@ def get_ticker_news(symbol):
 def get_news_sentiment(symbol):
     """Get news sentiment analysis"""
     try:
-        analyzer = StockAnalyzer(symbol)
+        analyzer = StockAnalyzer(symbol, gemini_api_key=os.getenv('GEMINI_API_KEY') if session.get('ai_mode') == 'on' else None)
+        
         sentiment = analyzer.analyze_news_sentiment()
         
         return jsonify({

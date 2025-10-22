@@ -29,6 +29,13 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            flex: 1;
         }
 
         h1 {
@@ -39,6 +46,65 @@
         .subtitle {
             color: #666;
             font-size: 14px;
+        }
+
+        .ai-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ai-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #48bb78;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .ai-status {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 5px;
+        }
+
+        .ai-status.on {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .ai-status.off {
+            background: #fed7d7;
+            color: #742a2a;
         }
 
         .controls {
@@ -243,8 +309,17 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📈 Stock Ticker Dashboard</h1>
-            <p class="subtitle">Monitor your favorite stocks in real-time</p>
+            <div class="header-left">
+                <h1>📈 Stock Ticker Dashboard</h1>
+                <p class="subtitle">Monitor your favorite stocks in real-time</p>
+            </div>
+            <div class="ai-toggle-container">
+                <span class="ai-label">AI Mode:</span>
+                <div class="toggle-switch" id="aiToggle" onclick="toggleAIMode()">
+                    <div class="toggle-slider"></div>
+                </div>
+                <span class="ai-status off" id="aiStatus">OFF</span>
+            </div>
         </div>
 
         <div class="controls">
@@ -289,6 +364,59 @@
 
     <script>
         let currentSearchedTicker = null;
+
+        // Initialize AI mode from session storage or default to 'off'
+        function initializeAIMode() {
+            const aiMode = sessionStorage.getItem('ai_mode') || 'off';
+            updateAIUI(aiMode);
+        }
+
+        function updateAIUI(mode) {
+            const toggle = document.getElementById('aiToggle');
+            const status = document.getElementById('aiStatus');
+            
+            if (mode === 'on') {
+                toggle.classList.add('active');
+                status.textContent = 'ON';
+                status.classList.remove('off');
+                status.classList.add('on');
+            } else {
+                toggle.classList.remove('active');
+                status.textContent = 'OFF';
+                status.classList.remove('on');
+                status.classList.add('off');
+            }
+        }
+
+        async function toggleAIMode() {
+            const currentMode = sessionStorage.getItem('ai_mode') || 'off';
+            const newMode = currentMode === 'on' ? 'off' : 'on';
+            
+            try {
+                const response = await fetch('/api/set_ai_mode', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ai_mode: newMode })
+                });
+                
+                const data = await response.json();
+                console.log(data);
+                
+                if (data.success || data.ai_mode) {
+                    sessionStorage.setItem('ai_mode', newMode);
+                    showAlert(`AI Mode turned ${newMode.toUpperCase()}. Reloading page...`, 'success');
+                    
+                    // Reload page after 1 second
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+            } catch (error) {
+                showAlert('Error toggling AI mode: ' + error.message, 'error');
+            }
+        }
 
         async function updateAllTickers() {
             const btn = event.target;
@@ -495,8 +623,9 @@
             }
         });
 
-        // Load tickers on page load
+        // Load tickers and initialize AI mode on page load
         window.addEventListener('load', () => {
+            initializeAIMode();
             loadTickers();
         });
 
