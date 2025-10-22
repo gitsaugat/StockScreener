@@ -442,12 +442,11 @@ def get_recommendation_score(analyzer_result):
         health_score = ratios.get('financial_health', {}).get('health_score', 5)
         news_score = analyzer_result.get('news_sentiment', {}).get('confidence', None)   # Scale 0-10 
         if news_score is not None:
-            overall_score = (valuation_score + profitability_score + health_score + (news_score/10)) / 4
+            overall_score_with_news = (valuation_score + profitability_score + health_score + (news_score/10)) / 4
         
-        else:
-            overall_score = (valuation_score + profitability_score + health_score) / 3        
+        overall_score = (valuation_score + profitability_score + health_score) / 3        
 
-            
+
         if overall_score >= 7:
             recommendation = 'Strong Buy'
         elif overall_score >= 6:
@@ -458,10 +457,23 @@ def get_recommendation_score(analyzer_result):
             recommendation = 'Sell'
         else:
             recommendation = 'Strong Sell'
+
+        if overall_score_with_news >= 7:
+            news_recommendation = 'Strong Buy'
+        elif overall_score_with_news >= 6:
+            news_recommendation = 'Buy'
+        elif overall_score_with_news >= 5:
+            news_recommendation = 'Hold'
+        elif overall_score_with_news >= 4:
+            news_recommendation = 'Sell'
+        else:
+            news_recommendation = 'Strong Sell'
         
         return {
             'score': round(overall_score, 1),
-            'recommendation': recommendation
+            'score_with_news_sentiment': round(overall_score_with_news, 1),
+            'recommendation': recommendation,
+            'news_recommendation': news_recommendation
         }
     except Exception as e:
         print(e)

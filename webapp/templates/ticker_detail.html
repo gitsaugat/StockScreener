@@ -470,7 +470,10 @@
                         <div class="stock-symbol">${info.symbol}</div>
                         <div class="stock-name">${info.name}</div>
                         <div class="recommendation-badge ${getRecommendationClass(rec.recommendation)}">
-                            ${rec.recommendation} - Score: ${rec.score}/10
+                            Fin: ${rec.recommendation} - Score: ${rec.score}/10
+                        </div>
+                         <div class="recommendation-badge ${getRecommendationClass(rec.news_recommendation)}">
+                            News: ${rec.news_recommendation} - Score: ${rec.score_with_news_sentiment}/10
                         </div>
                     </div>
                     <div class="stock-price-info">
