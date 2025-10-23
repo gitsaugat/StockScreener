@@ -366,7 +366,6 @@ class StockAnalyzer:
         """Fetch comprehensive stock data using yfinance"""
         try:
             stock = yf.Ticker(ticker)
-            
             # Get various data points
             info = stock.info
             hist = stock.history(period="1y")

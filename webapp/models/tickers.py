@@ -172,3 +172,13 @@ class HistoricalData(db.Model):
             db.session.rollback()
             print(f"Error fetching historical data for {symbol}: {e}")
             return False
+        
+class Analysis(db.Model):
+    __tablename__ = 'analysis'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    ticker_id = db.Column(db.Integer, db.ForeignKey('tickers.id'), nullable=False)
+    analysis_text = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    last_updated = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    
