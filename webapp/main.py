@@ -11,6 +11,9 @@ import pandas as pd
 import json
 from datetime import datetime
 import io
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.linear_model import LinearRegression
+import numpy as np
 
 app = Flask(__name__) 
 
@@ -336,6 +339,179 @@ def api_analyze(ticker):
 
 
 
+
+@app.route('/stock/predict/<ticker>')
+def predict_stock(ticker):
+    """Route to display stock prediction page"""
+    return render_template('stock_prediction.html', ticker=ticker.upper())
+
+@app.route('/api/stock/historical/<ticker>')
+def get_hist_data(ticker):
+    """API endpoint to get historical data and predictions"""
+    try:
+        # Get period from query params (default 1 year)
+        period = request.args.get('period', '1y')
+        
+        # Fetch stock data
+        stock = yf.Ticker(ticker.upper())
+        hist = stock.history(period=period)
+        info = stock.info
+        
+        if hist.empty:
+            return jsonify({'error': 'No data available for this ticker'}), 404
+        
+        # Prepare historical data
+        historical_data = []
+        for date, row in hist.iterrows():
+            historical_data.append({
+                'date': date.strftime('%Y-%m-%d'),
+                'open': round(row['Open'], 2),
+                'high': round(row['High'], 2),
+                'low': round(row['Low'], 2),
+                'close': round(row['Close'], 2),
+                'volume': int(row['Volume'])
+            })
+        
+        # Perform price prediction
+        predictions = predict_prices(hist)
+        
+        # Calculate statistics
+        current_price = hist['Close'][-1]
+        price_change = hist['Close'][-1] - hist['Close'][0]
+        price_change_pct = (price_change / hist['Close'][0]) * 100
+        
+        # Volatility
+        returns = hist['Close'].pct_change().dropna()
+        volatility = returns.std() * np.sqrt(252) * 100
+        
+        # Moving averages
+        ma_20 = hist['Close'].rolling(window=20).mean()
+        ma_50 = hist['Close'].rolling(window=50).mean()
+        
+        stats = {
+            'ticker': ticker.upper(),
+            'company_name': info.get('longName', ticker.upper()),
+            'current_price': round(current_price, 2),
+            'price_change': round(price_change, 2),
+            'price_change_pct': round(price_change_pct, 2),
+            'high': round(hist['High'].max(), 2),
+            'low': round(hist['Low'].min(), 2),
+            'avg_volume': int(hist['Volume'].mean()),
+            'volatility': round(volatility, 2),
+            'ma_20': round(ma_20[-1], 2) if len(ma_20) > 0 else None,
+            'ma_50': round(ma_50[-1], 2) if len(ma_50) > 0 else None,
+            'sector': info.get('sector', 'N/A'),
+            'industry': info.get('industry', 'N/A')
+        }
+        
+        return jsonify({
+            'success': True,
+            'stats': stats,
+            'historical': historical_data,
+            'predictions': predictions,
+            'moving_averages': {
+                'ma_20': [{'date': date.strftime('%Y-%m-%d'), 'value': round(val, 2)} 
+                         for date, val in zip(hist.index, ma_20) if not np.isnan(val)],
+                'ma_50': [{'date': date.strftime('%Y-%m-%d'), 'value': round(val, 2)} 
+                         for date, val in zip(hist.index, ma_50) if not np.isnan(val)]
+            }
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+def predict_prices(hist_data, days_ahead=30):
+    """
+    Simple price prediction using linear regression and moving average trends
+    This is a basic model - for production, consider using more sophisticated models
+    """
+    try:
+        # Prepare data
+        df = hist_data.copy()
+        df['Days'] = range(len(df))
+        
+        # Use multiple features for prediction
+        df['MA_5'] = df['Close'].rolling(window=5).mean()
+        df['MA_20'] = df['Close'].rolling(window=20).mean()
+        df['Volatility'] = df['Close'].rolling(window=10).std()
+        df['Returns'] = df['Close'].pct_change()
+        
+        # Drop NaN values
+        df = df.dropna()
+        
+        # Prepare features and target
+        features = ['Days', 'MA_5', 'MA_20', 'Volatility', 'Volume']
+        X = df[features].values
+        y = df['Close'].values
+        
+        # Scale features
+        scaler_X = MinMaxScaler()
+        scaler_y = MinMaxScaler()
+        
+        X_scaled = scaler_X.fit_transform(X)
+        y_scaled = scaler_y.fit_transform(y.reshape(-1, 1))
+        
+        # Train model
+        model = LinearRegression()
+        model.fit(X_scaled, y_scaled)
+        
+        # Generate future predictions
+        last_date = df.index[-1]
+        predictions = []
+        
+        # Get last known values
+        last_ma5 = df['MA_5'].iloc[-1]
+        last_ma20 = df['MA_20'].iloc[-1]
+        last_vol = df['Volatility'].iloc[-1]
+        last_volume = df['Volume'].iloc[-1]
+        last_days = df['Days'].iloc[-1]
+        
+        for i in range(1, days_ahead + 1):
+            future_date = last_date + timedelta(days=i)
+            
+            # Create feature vector (simplified - assumes relatively stable metrics)
+            future_features = np.array([[
+                last_days + i,
+                last_ma5,
+                last_ma20,
+                last_vol,
+                last_volume
+            ]])
+            
+            future_features_scaled = scaler_X.transform(future_features)
+            pred_scaled = model.predict(future_features_scaled)
+            pred_price = scaler_y.inverse_transform(pred_scaled)[0][0]
+            
+            predictions.append({
+                'date': future_date.strftime('%Y-%m-%d'),
+                'predicted_price': round(pred_price, 2),
+                'confidence': 'medium' if i <= 7 else 'low'
+            })
+            
+            # Update moving averages for next prediction (simplified)
+            last_ma5 = (last_ma5 * 4 + pred_price) / 5
+            last_ma20 = (last_ma20 * 19 + pred_price) / 20
+        
+        # Calculate prediction trend
+        if len(predictions) > 0:
+            trend_change = predictions[-1]['predicted_price'] - df['Close'].iloc[-1]
+            trend_pct = (trend_change / df['Close'].iloc[-1]) * 100
+            
+            return {
+                'predictions': predictions,
+                'trend': 'bullish' if trend_change > 0 else 'bearish',
+                'trend_change': round(trend_change, 2),
+                'trend_change_pct': round(trend_pct, 2),
+                'model': 'Linear Regression with Technical Indicators',
+                'note': 'Predictions are estimates based on historical patterns and should not be used as sole investment advice.'
+            }
+        
+        return {'predictions': [], 'error': 'Unable to generate predictions'}
+        
+    except Exception as e:
+        return {'predictions': [], 'error': str(e)}
+    
 if __name__ == '__main__':
 
     # Initialize database

@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import json
 import os 
 
+
 class StockAnalyzer:
     """Main class for stock analysis"""
     

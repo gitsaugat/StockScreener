@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Stock Screener</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px 80px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-header {
+            margin-bottom: 40px;
+        }
+
+        .slide-emoji {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        li {
+            color: #4a5568;
+            font-size: 1.15em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        li:before {
+            content: "→";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .code-block {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #2d3748;
+            white-space: pre-wrap;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            color: #718096;
+            font-size: 0.95em;
+        }
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+
+        .workflow-step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .workflow-arrow {
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .contact {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.3em;
+            color: #4a5568;
+        }
+
+        .contact a {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <div class="slide-header">
+                <div class="slide-emoji">🎓</div>
+                <h1>AI-Powered Stock Screener and<br>Financial Analysis Web Application</h1>
+            </div>
+            <div class="slide-content">
+                <div class="subtitle">
+                    <p style="margin-bottom: 20px;"><strong>Course:</strong> DSA 587 – Data Science Applications</p>
+                    <p style="margin-bottom: 20px;"><strong>Professor:</strong> Joaquin Carbonara</p>
+                    <p><strong>Student:</strong> Saugat Siwakoti</p>
+                </div>
+            </div>
+            <div class="slide-counter">Slide 1 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()" disabled>Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">💡</div>
+                <h2>Introduction</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>The stock market generates vast amounts of financial and price data every second.</li>
+                    <li>Investors often struggle to interpret these data efficiently.</li>
+                    <li>This project leverages AI to simplify stock screening and provide actionable investment insights.</li>
+                    <li>The system integrates real-time data, machine learning, and AI-based interpretation into one platform.</li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 2 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">🧩</div>
+                <h2>Project Overview</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>A Flask-based web application for analyzing stock performance.</li>
+                    <li>Fetches real-time data from yFinance and performs AI-driven analysis using Gemini API.</li>
+                    <li>Stores results and user-selected stocks in a PostgreSQL database.</li>
+                    <li>Provides structured financial reports including risk, valuation, and recommendations.</li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 3 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">🎯</div>
+                <h2>Project Objectives</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>Build a Flask web app for interactive stock analysis.</li>
+                    <li>Integrate yFinance to fetch live stock and financial data.</li>
+                    <li>Use Gemini API for natural language financial analysis.</li>
+                    <li>Implement PostgreSQL for persistent data storage.</li>
+                    <li>Generate a complete financial report with:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Market Sentiment (Bullish/Bearish/Neutral)</li>
+                            <li>Key Strengths & Concerns</li>
+                            <li>Valuation & Risk Analysis</li>
+                            <li>Investment Recommendation</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 4 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">⚙️</div>
+                <h2>Technical Approach (Backend)</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li><span class="highlight">Flask:</span> Web framework for routing, templates, and API integration.</li>
+                    <li><span class="highlight">Gemini API:</span> Generates AI-powered insights from financial data.</li>
+                    <li><span class="highlight">PostgreSQL:</span> Manages stock data, user selections, and historical analyses.</li>
+                </ul>
+                <div class="workflow">
+                    <div class="workflow-step">User Input</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">yFinance</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">Flask</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">Gemini</div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">Database</div>
+                </div>
+            </div>
+            <div class="slide-counter">Slide 5 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">💻</div>
+                <h2>Technical Approach (Frontend)</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>HTML/CSS/Bootstrap for a responsive interface.</li>
+                    <li>Interactive dashboard to:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li>Add or remove stocks from the list</li>
+                            <li>View historical charts and live metrics</li>
+                            <li>Display AI-generated summaries and insights</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 6 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">📊</div>
+                <h2>Data Retrieval & AI Analysis</h2>
+            </div>
+            <div class="slide-content">
+                <div class="grid-2col">
+                    <div class="card">
+                        <h3>Data Source: yFinance</h3>
+                        <ul>
+                            <li>Current price</li>
+                            <li>P/E ratio</li>
+                            <li>Market cap</li>
+                            <li>Beta</li>
+                            <li>Profit margin</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>AI Analysis: Gemini API</h3>
+                        <ul>
+                            <li>Performance summary</li>
+                            <li>Valuation analysis</li>
+                            <li>Risk assessment</li>
+                            <li>Investment recommendations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-counter">Slide 7 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">🧠</div>
+                <h2>Example Gemini Prompt</h2>
+            </div>
+            <div class="slide-content">
+                <div class="code-block">Analyze the following stock data and provide a comprehensive investment analysis:
+Company: Apple (AAPL)
+Sector: Technology
+
+Financial Metrics:
+- Current Price: $192.50
+- P/E Ratio: 28.34
+- Profit Margin: 25.6%
+- Beta: 1.20
+
+Performance:
+- 52-Week High: $197.70
+- 52-Week Low: $143.16
+
+Please provide:
+1. Overall Assessment
+2. Key Strengths
+3. Key Concerns
+4. Valuation Analysis
+5. Risk Assessment
+6. Investment Recommendation</div>
+            </div>
+            <div class="slide-counter">Slide 8 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">📈</div>
+                <h2>Expected Outcomes</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>A working AI-powered web application for financial analysis.</li>
+                    <li>Real-time data visualization and insights.</li>
+                    <li>Integration of AI (Gemini) with data retrieval (yFinance) and storage (PostgreSQL).</li>
+                    <li>A hands-on demonstration of AI applications in data science.</li>
+                    <li>Foundation for more advanced predictive modeling and portfolio tools.</li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 9 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">🛠️</div>
+                <h2>Technology Stack</h2>
+            </div>
+            <div class="slide-content">
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Tools</th>
+                    </tr>
+                    <tr>
+                        <td>Programming</td>
+                        <td>Python</td>
+                    </tr>
+                    <tr>
+                        <td>Web Framework</td>
+                        <td>Flask</td>
+                    </tr>
+                    <tr>
+                        <td>Data Retrieval</td>
+                        <td>yFinance</td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>
+                        <td>PostgreSQL</td>
+                    </tr>
+                    <tr>
+                        <td>AI Model</td>
+                        <td>Google Gemini API</td>
+                    </tr>
+                    <tr>
+                        <td>Frontend</td>
+                        <td>HTML, CSS, Bootstrap</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-counter">Slide 10 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">🔮</div>
+                <h2>Future Enhancements</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>Integrate LSTM or Transformer models for stock price prediction.</li>
+                    <li>Include FinBERT or Gemini sentiment analysis for financial news.</li>
+                    <li>Add portfolio management and user authentication features.</li>
+                    <li>Deploy on a cloud platform like AWS or Render for live access.</li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 11 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">🧾</div>
+                <h2>Conclusion</h2>
+            </div>
+            <div class="slide-content">
+                <ul>
+                    <li>This project demonstrates how AI and data science can enhance investment decision-making.</li>
+                    <li>Combines real-time data, machine learning, and web technologies.</li>
+                    <li>Offers a scalable foundation for future financial AI applications.</li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 12 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 13 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">🙌</div>
+                <h2>Thank You</h2>
+            </div>
+            <div class="slide-content">
+                <h1 style="text-align: center; margin-top: 100px;">Questions?</h1>
+                <div class="contact">
+                    <p>📧 Saugat Siwakoti</p>
+                    <p>🌐 DSA 587 – Buffalo State University</p>
+                </div>
+            </div>
+            <div class="slide-counter">Slide 13 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()">Next</button>
+            </div>
+        </div>
+
+        <!-- Slide 14 - Backup -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-emoji">📚</div>
+                <h2>Backup / Additional Information</h2>
+            </div>
+            <div class="slide-content">
+                <h3>Key Project Benefits:</h3>
+                <ul>
+                    <li>Democratizes access to sophisticated financial analysis</li>
+                    <li>Reduces time spent on manual research</li>
+                    <li>Provides consistent, objective analysis framework</li>
+                    <li>Educational tool for understanding financial metrics</li>
+                </ul>
+            </div>
+            <div class="slide-counter">Slide 14 of 14</div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="previousSlide()">Previous</button>
+                <button class="nav-btn" onclick="nextSlide()" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            updateButtons();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function updateButtons() {
+            const prevButtons = document.querySelectorAll('.navigation button:first-child');
+            const nextButtons = document.querySelectorAll('.navigation button:last-child');
+            
+            prevButtons.forEach(btn => {
+                btn.disabled = currentSlide === 0;
+            });
+            
+            nextButtons.forEach(btn => {
+                btn.disabled = currentSlide === totalSlides - 1;
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Initialize
+        updateButtons();
+    </script>
+</body>
+</html>

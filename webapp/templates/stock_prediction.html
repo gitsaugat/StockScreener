@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction - {{ ticker }}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header .meta {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .positive {
+            color: #10b981;
+        }
+
+        .negative {
+            color: #ef4444;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-header h2 {
+            color: #333;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .period-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .period-btn:hover, .period-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+
+        .prediction-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .prediction-info h3 {
+            margin-bottom: 15px;
+        }
+
+        .prediction-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .prediction-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .trend-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .trend-bullish {
+            background: #10b981;
+            color: white;
+        }
+
+        .trend-bearish {
+            background: #ef4444;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .period-selector {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="stockTitle">Loading...</h1>
+            <div class="meta" id="stockMeta">Fetching stock data...</div>
+        </div>
+
+        <div id="loadingMessage" class="loading">
+            <div>Loading historical data and predictions...</div>
+        </div>
+
+        <div id="errorMessage" class="error" style="display: none;"></div>
+
+        <div id="content" style="display: none;">
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2>Historical Price & Predictions</h2>
+                    <div class="period-selector">
+                        <button class="period-btn" data-period="1mo">1M</button>
+                        <button class="period-btn" data-period="3mo">3M</button>
+                        <button class="period-btn" data-period="6mo">6M</button>
+                        <button class="period-btn active" data-period="1y">1Y</button>
+                        <button class="period-btn" data-period="2y">2Y</button>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="prediction-info" id="predictionInfo"></div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h2>Volume Analysis</h2>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="volumeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ticker = "{{ ticker }}";
+        let priceChart = null;
+        let volumeChart = null;
+        let currentData = null;
+
+        async function loadStockData(period = '1y') {
+            try {
+                const response = await fetch(`/api/stock/historical/${ticker}?period=${period}`);
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to load data');
+                }
+
+                currentData = data;
+                displayData(data);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function displayData(data) {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+
+            // Update header
+            document.getElementById('stockTitle').textContent = 
+                `${data.stats.company_name} (${data.stats.ticker})`;
+            document.getElementById('stockMeta').textContent = 
+                `${data.stats.sector} • ${data.stats.industry}`;
+
+            // Update stats
+            updateStats(data.stats);
+
+            // Update charts
+            updatePriceChart(data);
+            updateVolumeChart(data);
+
+            // Update prediction info
+            updatePredictionInfo(data);
+        }
+
+        function updateStats(stats) {
+            const statsHtml = `
+                <div class="stat-card">
+                    <div class="stat-label">Current Price</div>
+                    <div class="stat-value">$${stats.current_price}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Change</div>
+                    <div class="stat-value ${stats.price_change >= 0 ? 'positive' : 'negative'}">
+                        ${stats.price_change >= 0 ? '+' : ''}${stats.price_change} 
+                        (${stats.price_change_pct >= 0 ? '+' : ''}${stats.price_change_pct}%)
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">52W High</div>
+                    <div class="stat-value">$${stats.high}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">52W Low</div>
+                    <div class="stat-value">$${stats.low}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Volatility</div>
+                    <div class="stat-value">${stats.volatility}%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg Volume</div>
+                    <div class="stat-value">${(stats.avg_volume / 1000000).toFixed(2)}M</div>
+                </div>
+            `;
+            document.getElementById('statsGrid').innerHTML = statsHtml;
+        }
+
+        function updatePriceChart(data) {
+            const ctx = document.getElementById('priceChart').getContext('2d');
+
+            // Prepare data
+            const historicalDates = data.historical.map(d => d.date);
+            const historicalPrices = data.historical.map(d => d.close);
+            const predictionDates = data.predictions.predictions.map(d => d.date);
+            const predictionPrices = data.predictions.predictions.map(d => d.predicted_price);
+
+            // Combine dates for x-axis
+            const allDates = [...historicalDates, ...predictionDates];
+
+            // Create datasets
+            const datasets = [
+                {
+                    label: 'Historical Price',
+                    data: historicalPrices,
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0
+                },
+                {
+                    label: 'Predicted Price',
+                    data: Array(historicalPrices.length - 1).fill(null).concat([historicalPrices[historicalPrices.length - 1]], predictionPrices),
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0
+                }
+            ];
+
+            // Add moving averages if available
+            if (data.moving_averages.ma_20.length > 0) {
+                datasets.push({
+                    label: 'MA 20',
+                    data: data.moving_averages.ma_20.map(d => d.value),
+                    borderColor: '#10b981',
+                    borderWidth: 1,
+                    fill: false,
+                    tension: 0.4,
+                    pointRadius: 0
+                });
+            }
+
+            if (priceChart) {
+                priceChart.destroy();
+            }
+
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: allDates,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(2);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateVolumeChart(data) {
+            const ctx = document.getElementById('volumeChart').getContext('2d');
+
+            const dates = data.historical.map(d => d.date);
+            const volumes = data.historical.map(d => d.volume);
+
+            if (volumeChart) {
+                volumeChart.destroy();
+            }
+
+            volumeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Volume',
+                        data: volumes,
+                        backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                        borderColor: '#667eea',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000000).toFixed(1) + 'M';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updatePredictionInfo(data) {
+            const pred = data.predictions;
+            const trendClass = pred.trend === 'bullish' ? 'trend-bullish' : 'trend-bearish';
+
+            const html = `
+                <h3>30-Day Price Prediction</h3>
+                <p><strong>Model:</strong> ${pred.model}</p>
+                <div class="prediction-summary">
+                    <div class="prediction-item">
+                        <div style="font-size: 14px; margin-bottom: 5px;">Trend</div>
+                        <div style="font-size: 24px; font-weight: bold;">
+                            <span class="trend-badge ${trendClass}">${pred.trend}</span>
+                        </div>
+                    </div>
+                    <div class="prediction-item">
+                        <div style="font-size: 14px; margin-bottom: 5px;">Predicted Change</div>
+                        <div style="font-size: 24px; font-weight: bold;">
+                            ${pred.trend_change >= 0 ? '+' : ''}$${pred.trend_change} 
+                            (${pred.trend_change_pct >= 0 ? '+' : ''}${pred.trend_change_pct}%)
+                        </div>
+                    </div>
+                    <div class="prediction-item">
+                        <div style="font-size: 14px; margin-bottom: 5px;">30-Day Target</div>
+                        <div style="font-size: 24px; font-weight: bold;">
+                            $${pred.predictions[pred.predictions.length - 1].predicted_price}
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 12px; opacity: 0.8;">
+                    <strong>Note:</strong> ${pred.note}
+                </p>
+            `;
+
+            document.getElementById('predictionInfo').innerHTML = html;
+        }
+
+        function showError(message) {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+
+        // Period selector
+        document.querySelectorAll('.period-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                loadStockData(this.dataset.period);
+            });
+        });
+
+        // Load initial data
+        loadStockData();
+    </script>
+</body>
+</html>
