@@ -300,6 +300,39 @@ def get_news_sentiment(symbol):
         })
 
 
+@app.route('/analyze/<ticker>')
+def analyze(ticker):
+    ticker = ticker.upper()
+    analyzer = StockAnalyzer(ticker, gemini_api_key=os.getenv('GEMINI_API_KEY'))
+
+    # Fetch stock data
+    stock_data = analyzer.get_stock_data(ticker)
+    
+    if 'error' in stock_data:
+        return render_template('error.html', error=stock_data['error'], ticker=ticker)
+    
+    # Analyze with Gemini
+    analysis = analyzer.analyze_with_gemini(stock_data)
+    
+    return render_template('analysis.html', stock_data=stock_data, analysis=analysis)
+
+@app.route('/api/analyze/<ticker>')
+def api_analyze(ticker):
+
+    ticker = ticker.upper()
+    analyzer = StockAnalyzer(ticker, gemini_api_key=os.getenv('GEMINI_API_KEY'))
+
+    stock_data = analyzer.get_stock_data(ticker)
+    
+    if 'error' in stock_data:
+        return jsonify({'error': stock_data['error']}), 400
+    
+    analysis = analyzer.analyze_with_gemini(stock_data)
+    
+    return jsonify({
+        'stock_data': stock_data,
+        'analysis': analysis
+    })
 
 
 

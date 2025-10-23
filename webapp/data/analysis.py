@@ -362,6 +362,103 @@ class StockAnalyzer:
             'news': self.get_news(),
             'news_sentiment': self.analyze_news_sentiment() if self.gemini_model else None
         }
+    def get_stock_data(self,ticker):
+        """Fetch comprehensive stock data using yfinance"""
+        try:
+            stock = yf.Ticker(ticker)
+            
+            # Get various data points
+            info = stock.info
+            hist = stock.history(period="1y")
+            
+            # Calculate key metrics
+            current_price = info.get('currentPrice', 0)
+            pe_ratio = info.get('trailingPE', 0)
+            market_cap = info.get('marketCap', 0)
+            revenue = info.get('totalRevenue', 0)
+            profit_margin = info.get('profitMargins', 0)
+            debt_to_equity = info.get('debtToEquity', 0)
+            
+            # Historical performance
+            year_high = hist['High'].max()
+            year_low = hist['Low'].min()
+            avg_volume = hist['Volume'].mean()
+            
+            # Calculate returns
+            if len(hist) > 0:
+                year_return = ((hist['Close'][-1] - hist['Close'][0]) / hist['Close'][0]) * 100
+            else:
+                year_return = 0
+            
+            stock_data = {
+                'ticker': ticker,
+                'company_name': info.get('longName', ticker),
+                'current_price': current_price,
+                'pe_ratio': pe_ratio,
+                'market_cap': market_cap,
+                'revenue': revenue,
+                'profit_margin': profit_margin * 100 if profit_margin else 0,
+                'debt_to_equity': debt_to_equity,
+                'year_high': year_high,
+                'year_low': year_low,
+                'avg_volume': avg_volume,
+                'year_return': year_return,
+                'sector': info.get('sector', 'N/A'),
+                'industry': info.get('industry', 'N/A'),
+                'dividend_yield': info.get('dividendYield', 0) * 100 if info.get('dividendYield') else 0,
+                'beta': info.get('beta', 0),
+                'fifty_two_week_change': info.get('52WeekChange', 0) * 100 if info.get('52WeekChange') else 0
+            }
+            
+            return stock_data
+        except Exception as e:
+            return {'error': str(e)}
+
+    def analyze_with_gemini(self,stock_data):
+        """Use Gemini to analyze the stock data"""
+        try:
+            prompt = f"""
+            Analyze the following stock data and provide a comprehensive investment analysis:
+            
+            Company: {stock_data['company_name']} ({stock_data['ticker']})
+            Sector: {stock_data['sector']}
+            Industry: {stock_data['industry']}
+            
+            Financial Metrics:
+            - Current Price: ${stock_data['current_price']:.2f}
+            - Market Cap: ${stock_data['market_cap']:,.0f}
+            - P/E Ratio: {stock_data['pe_ratio']:.2f}
+            - Profit Margin: {stock_data['profit_margin']:.2f}%
+            - Debt to Equity: {stock_data['debt_to_equity']:.2f}
+            - Beta: {stock_data['beta']:.2f}
+            - Dividend Yield: {stock_data['dividend_yield']:.2f}%
+            
+            Performance:
+            - 52-Week High: ${stock_data['year_high']:.2f}
+            - 52-Week Low: ${stock_data['year_low']:.2f}
+            - Year Return: {stock_data['year_return']:.2f}%
+            - 52-Week Change: {stock_data['fifty_two_week_change']:.2f}%
+            
+            Please provide:
+            1. Overall Assessment (Bullish/Bearish/Neutral)
+            2. Key Strengths (3-4 points)
+            3. Key Concerns (3-4 points)
+            4. Valuation Analysis
+            5. Risk Assessment
+            6. Investment Recommendation (Buy/Hold/Sell) with reasoning
+            
+            Format your response in clear sections with headers.
+            """
+            import re
+            response = self.gemini_model.models.generate_content(
+                model="gemini-2.5-flash",
+                contents = prompt)
+            raw_text = response.to_json_dict()["candidates"][0]["content"]["parts"][0]["text"]
+            cleaned_text = re.sub(r"^```json\s*|\s*```$", "", raw_text.strip())
+            return cleaned_text
+        except Exception as e:
+            return f"Error analyzing with Gemini: {str(e)}"
+
 
 
 class PortfolioAnalyzer:
@@ -482,3 +579,6 @@ def get_recommendation_score(analyzer_result):
             'score': 5.0,
             'recommendation': 'Hold'
         }
+    
+
+    
