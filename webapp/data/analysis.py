@@ -540,7 +540,12 @@ def get_recommendation_score(analyzer_result):
         valuation_score = ratios.get('valuation', {}).get('valuation_score', 5)
         profitability_score = ratios.get('profitability', {}).get('profitability_score', 5)
         health_score = ratios.get('financial_health', {}).get('health_score', 5)
-        news_score = analyzer_result.get('news_sentiment', {}).get('confidence', 50)/10   # Scale 0-10 
+        news_score = 0   # Scale 0-10 
+        print(analyzer_result.get('news_sentiment'))
+        if analyzer_result.get('news_sentiment',{}).get('sentiment','neutral') == 'positive':
+            news_score = analyzer_result.get('news_sentiment', {}).get('confidence', 50)/10
+        else:
+            news_score = -(analyzer_result.get('news_sentiment', {}).get('confidence', 50)/10)
 
         overall_score = (valuation_score + profitability_score + health_score) / 3        
 
