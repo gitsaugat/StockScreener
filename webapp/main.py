@@ -6,10 +6,22 @@ import yfinance as yf
 from models.tickers import Ticker,HistoricalData,db
 from data.analysis import StockAnalyzer, get_recommendation_score
 import os
+import dotenv
+import pandas as pd
+import json
+from datetime import datetime
+import io
 
 app = Flask(__name__) 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///stocks.db'
+dotenv.load_dotenv('.env')
+DB_USER = os.environ.get("DB_USERNAME")
+DB_PASS = os.environ.get("DB_PASSWORD")
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
+DB_NAME = os.environ.get("DB_NAME")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your-secret-key-here'
 
@@ -286,6 +298,9 @@ def get_news_sentiment(symbol):
             'success': False,
             'error': str(e)
         })
+
+
+
 
 
 if __name__ == '__main__':
