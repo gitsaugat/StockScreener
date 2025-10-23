@@ -391,6 +391,7 @@ class StockAnalyzer:
             
             stock_data = {
                 'ticker': ticker,
+                'news':stock.news,
                 'company_name': info.get('longName', ticker),
                 'current_price': current_price,
                 'pe_ratio': pe_ratio,
@@ -416,6 +417,7 @@ class StockAnalyzer:
     def analyze_with_gemini(self,stock_data):
         """Use Gemini to analyze the stock data"""
         try:
+            news_titleS = "".join([f", {item['content'].get('title', 'No title')}" for item in stock_data['news'][:10]])
             prompt = f"""
             Analyze the following stock data and provide a comprehensive investment analysis:
             
@@ -423,6 +425,9 @@ class StockAnalyzer:
             Sector: {stock_data['sector']}
             Industry: {stock_data['industry']}
             
+            RECENT NEWS TITLES: 
+            - {news_titleS}
+
             Financial Metrics:
             - Current Price: ${stock_data['current_price']:.2f}
             - Market Cap: ${stock_data['market_cap']:,.0f}
@@ -439,12 +444,13 @@ class StockAnalyzer:
             - 52-Week Change: {stock_data['fifty_two_week_change']:.2f}%
             
             Please provide:
-            1. Overall Assessment (Bullish/Bearish/Neutral)
+            1. Overall Assessment based on financials and news (Bullish/Bearish/Neutral) 
             2. Key Strengths (3-4 points)
             3. Key Concerns (3-4 points)
             4. Valuation Analysis
             5. Risk Assessment
-            6. Investment Recommendation (Buy/Hold/Sell) with reasoning
+            6. Investment Recommendation (Buy/Hold/Sell) with reasoning 
+            7. closest targets
             
             Format your response in clear sections with headers.
             """
