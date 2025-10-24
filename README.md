@@ -5,13 +5,13 @@ Inside the **`webapp`** folder, create a file named **`.env`** and add the follo
 
 ```bash
 # .env file
-GEMINI_API_KEY=AIzaSyCpNpGsMDoMXaU91_55oUpXu5zsTA2bHDU
-SECRET_KEY=dasdas781ew219ndsadnasdasdasd12312
-DB_USERNAME=siwakos01
-DB_PASSWORD=siwakos01
+GEMINI_API_KEY=AIzaddasdasdsau5zsTA2bHDU
+SECRET_KEY=dasdas781ew219ndsadndsadsaasdasdasd12312
+DB_USERNAME=siwadasdakos01
+DB_PASSWORD=dasdas
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=dsProjects
+DB_NAME=db
 ```
 
 > ⚠️ **Note:** Never share your `.env` file publicly or commit it to GitHub.  
